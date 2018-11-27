@@ -30,7 +30,7 @@ public class RedisTask {
     private ItemCatDao itemCatDao;
 
 
-    @Scheduled(cron = "0 13 0 * * ?")
+    @Scheduled(cron = "0 0 16 * * ?")
     public void setBrandAndSpecsToRedis() {
         //将模板数据缓存到redis中
         List<TypeTemplate> templateList = typeTemplateDao.selectByExample(null);
@@ -48,7 +48,7 @@ public class RedisTask {
         System.out.println("定时器执行啦，模板到Redis啦啦啦。。。");
     }
 
-    @Scheduled(cron = "0 13 0 * * ?")
+    @Scheduled(cron = "0 0 16 * * ?")
     public void setItemCatToRedis(){
         // 将所有的商品分类缓存到redis中
         List<ItemCat> itemCatList = itemCatDao.selectByExample(null);

@@ -9,6 +9,7 @@
     <file type="web" url="file://$PROJECT_DIR$/parent67/pinyougou-web-manager" />
     <file type="web" url="file://$PROJECT_DIR$/parent67/pinyougou-web-portal" />
     <file type="web" url="file://$PROJECT_DIR$/parent67/pinyougou-web-shop" />
+    <type id="Spring" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">

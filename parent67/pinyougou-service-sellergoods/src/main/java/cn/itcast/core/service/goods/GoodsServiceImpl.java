@@ -14,6 +14,7 @@ import cn.itcast.core.pojo.item.Item;
 import cn.itcast.core.pojo.item.ItemQuery;
 import cn.itcast.core.pojo.specification.Specification;
 import cn.itcast.core.pojo.vo.GoodsVo;
+import cn.itcast.core.service.staticpage.StaticPageService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
@@ -49,6 +50,9 @@ public class GoodsServiceImpl implements GoodsService{
 
     @Resource
     private SolrTemplate solrTemplate;
+
+    @Resource
+    private StaticPageService staticPageService;
      /**
       * 商家添加商品
       * @param goodsVo
@@ -245,7 +249,9 @@ public class GoodsServiceImpl implements GoodsService{
                     // 将商品保存到索引库
                         //dataImportToSolr();//测试用
                     updateSolr(id);
-                    // TODO:生成商品详情的静态页
+                    // 生成商品详情的静态页
+                    staticPageService.getHtml(String.valueOf(id));
+
                 }
             }
         }

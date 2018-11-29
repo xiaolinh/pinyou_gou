@@ -19,7 +19,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.data.solr.core.SolrTemplate;
-import org.springframework.data.solr.core.query.SimpleQuery;
+
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +61,8 @@ public class GoodsServiceImpl implements GoodsService{
     @Resource
     private Destination topicPageAndSolrDestination;
 
+    @Resource
+    private Destination queueSolrDeleteDestination;
 
      /**
       * 商家添加商品
@@ -304,15 +306,23 @@ public class GoodsServiceImpl implements GoodsService{
         if(ids != null && ids.length > 0){
             Goods goods = new Goods();
             goods.setIsDelete("1");
-            for (Long id : ids) {
+            for (final Long id : ids) {
                 goods.setId(id);
                 goodsDao.updateByPrimaryKeySelective(goods);
-                // TODO:将更新索引库
+              /*  //将更新索引库
                 SimpleQuery simpleQuery = new SimpleQuery("item_goodsid:"+id);
                 solrTemplate.delete(simpleQuery);
                 solrTemplate.commit();
 
-                // TODO:删除商品详情的静态页（可选）
+                // 删除商品详情的静态页（可选）*/
+                jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        TextMessage textMessage = session.createTextMessage(String.valueOf(id));
+                        return textMessage;
+                    }
+                });
+
             }
         }
 

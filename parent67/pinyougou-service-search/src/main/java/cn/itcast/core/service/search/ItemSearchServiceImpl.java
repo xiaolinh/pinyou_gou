@@ -250,4 +250,16 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
 
     }
+
+    /**
+     * 删除商品索引
+     * @param id
+     */
+    @Override
+    public void deleteItemFromSolr(Long id) {
+        SimpleQuery query = new SimpleQuery("item_goodsid:"+id);
+        solrTemplate.delete(query);
+        solrTemplate.commit();
+
+    }
 }

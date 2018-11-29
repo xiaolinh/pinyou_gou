@@ -15,4 +15,10 @@ public interface ItemSearchService {
      * @param id
      */
     public void updateSolr(Long id);
+
+    /**
+     * 删除索引
+     * @param id
+     */
+    public void deleteItemFromSolr(Long id);
 }

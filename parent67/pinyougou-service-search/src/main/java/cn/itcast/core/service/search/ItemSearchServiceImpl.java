@@ -1,7 +1,9 @@
 package cn.itcast.core.service.search;
 
 
+import cn.itcast.core.dao.item.ItemDao;
 import cn.itcast.core.pojo.item.Item;
+import cn.itcast.core.pojo.item.ItemQuery;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,9 @@ public class ItemSearchServiceImpl implements ItemSearchService {
     private SolrTemplate solrTemplate;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Resource
+    private ItemDao itemDao;
 
     /**
      *  前台系统检索
@@ -224,5 +229,25 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         map.put("total", scoredPage.getTotalElements());  //总条数
         map.put("rows", scoredPage.getContent());         //结果集
         return map;
+    }
+
+    @Override
+    public void updateSolr(Long id) {
+        // 根据商品id查询对应的库存信息
+        ItemQuery itemQuery = new ItemQuery();
+        itemQuery.createCriteria().andStatusEqualTo("1").
+                andIsDefaultEqualTo("1").andGoodsIdEqualTo(id);
+        List<Item> list = itemDao.selectByExample(itemQuery);
+        if(list != null && list.size() > 0){
+            for (Item item : list) {
+                // 处理动态字段
+                String spec = item.getSpec();
+                Map specMap = JSON.parseObject(spec, Map.class);
+                item.setSpecMap(specMap);
+            }
+            solrTemplate.saveBeans(list);
+            solrTemplate.commit();
+        }
+
     }
 }

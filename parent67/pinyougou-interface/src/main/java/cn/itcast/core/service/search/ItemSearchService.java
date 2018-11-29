@@ -9,4 +9,10 @@ public interface ItemSearchService {
      * @return
      */
     Map<String, Object> search(Map<String, String> searchMap);
+
+    /**
+     * 审核通过把商品添加到索引库
+     * @param id
+     */
+    public void updateSolr(Long id);
 }

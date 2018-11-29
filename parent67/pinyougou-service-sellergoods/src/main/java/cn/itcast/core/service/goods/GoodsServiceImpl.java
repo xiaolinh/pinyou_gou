@@ -12,20 +12,21 @@ import cn.itcast.core.pojo.good.GoodsDesc;
 import cn.itcast.core.pojo.good.GoodsQuery;
 import cn.itcast.core.pojo.item.Item;
 import cn.itcast.core.pojo.item.ItemQuery;
-import cn.itcast.core.pojo.specification.Specification;
 import cn.itcast.core.pojo.vo.GoodsVo;
 import cn.itcast.core.service.staticpage.StaticPageService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.opensaml.xml.signature.Q;
 import org.springframework.data.solr.core.SolrTemplate;
-import org.springframework.data.solr.core.query.SimpleFacetQuery;
 import org.springframework.data.solr.core.query.SimpleQuery;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.jms.*;
+
 import java.util.*;
 
 
@@ -53,6 +54,14 @@ public class GoodsServiceImpl implements GoodsService{
 
     @Resource
     private StaticPageService staticPageService;
+
+    @Resource
+    private JmsTemplate jmsTemplate;
+
+    @Resource
+    private Destination topicPageAndSolrDestination;
+
+
      /**
       * 商家添加商品
       * @param goodsVo
@@ -242,15 +251,25 @@ public class GoodsServiceImpl implements GoodsService{
         if (ids != null && ids.length > 0) {
             Goods goods = new Goods();
             goods.setAuditStatus(status);
-            for (Long id : ids) {
+            for (final Long id : ids) {
                 goods.setId(id);
                 goodsDao.updateByPrimaryKeySelective(goods);
                 if ("1".equals(status)) { // 审核成功
                     // 将商品保存到索引库
                         //dataImportToSolr();//测试用
-                    updateSolr(id);
-                    // 生成商品详情的静态页
-                    staticPageService.getHtml(String.valueOf(id));
+                        //updateSolr(id);
+                        // 生成商品详情的静态页
+                         //staticPageService.getHtml(String.valueOf(id));
+
+                    jmsTemplate.send(topicPageAndSolrDestination, new MessageCreator() {
+                        //将id封装到Messages中
+                        @Override
+                        public Message createMessage(Session session) throws JMSException {
+                            TextMessage textMessage = session.createTextMessage(String.valueOf(id));
+                            return textMessage;
+                        }
+                    });
+
 
                 }
             }

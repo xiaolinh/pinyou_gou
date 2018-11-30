@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/parent67/pinyougou-service-search/pinyougou-service-search.iml" filepath="$PROJECT_DIR$/parent67/pinyougou-service-search/pinyougou-service-search.iml" />
       <module fileurl="file://$PROJECT_DIR$/parent67/pinyougou-service-sellergoods/pinyougou-service-sellergoods.iml" filepath="$PROJECT_DIR$/parent67/pinyougou-service-sellergoods/pinyougou-service-sellergoods.iml" />
       <module fileurl="file://$PROJECT_DIR$/parent67/pinyougou-service-user/pinyougou-service-user.iml" filepath="$PROJECT_DIR$/parent67/pinyougou-service-user/pinyougou-service-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pinyougou-sms/pinyougou-sms.iml" filepath="$PROJECT_DIR$/pinyougou-sms/pinyougou-sms.iml" />
       <module fileurl="file://$PROJECT_DIR$/parent67/pinyougou-web-manager/pinyougou-web-manager.iml" filepath="$PROJECT_DIR$/parent67/pinyougou-web-manager/pinyougou-web-manager.iml" />
       <module fileurl="file://$PROJECT_DIR$/parent67/pinyougou-web-portal/pinyougou-web-portal.iml" filepath="$PROJECT_DIR$/parent67/pinyougou-web-portal/pinyougou-web-portal.iml" />
       <module fileurl="file://$PROJECT_DIR$/parent67/pinyougou-web-shop/pinyougou-web-shop.iml" filepath="$PROJECT_DIR$/parent67/pinyougou-web-shop/pinyougou-web-shop.iml" />

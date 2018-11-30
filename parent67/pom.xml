@@ -20,8 +20,8 @@
         <module>pinyougou-service-search</module>
         <module>pinyougou-service-buyer</module>
         <module>pinyougou-service-page</module>
-        <module>pinyougou-service-user</module>
         <module>pinyougou-web-user</module>
+        <module>pinyougou-service-user</module>
     </modules>
     <!-- 集中定义依赖版本号 -->
     <properties>

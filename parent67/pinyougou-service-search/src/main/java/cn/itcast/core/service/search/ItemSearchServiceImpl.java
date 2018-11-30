@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
 import org.springframework.data.solr.core.query.result.*;
-import sun.misc.ASCIICaseInsensitiveComparator;
+
 
 import javax.annotation.Resource;
 import java.util.*;

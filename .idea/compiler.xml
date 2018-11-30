@@ -15,6 +15,7 @@
         <module name="pinyougou-service-search" />
         <module name="pinyougou-service-sellergoods" />
         <module name="pinyougou-service-user" />
+        <module name="pinyougou-sms" />
         <module name="pinyougou-web-manager" />
         <module name="pinyougou-web-portal" />
         <module name="pinyougou-web-shop" />
@@ -32,6 +33,7 @@
       <module name="pinyougou-service-search" target="1.7" />
       <module name="pinyougou-service-sellergoods" target="1.7" />
       <module name="pinyougou-service-user" target="1.7" />
+      <module name="pinyougou-sms" target="1.6" />
       <module name="pinyougou-web-manager" target="1.7" />
       <module name="pinyougou-web-portal" target="1.7" />
       <module name="pinyougou-web-shop" target="1.7" />

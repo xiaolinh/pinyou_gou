@@ -6,8 +6,11 @@
     <file url="file://$PROJECT_DIR$/parent67/pinyougou-service-search" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/parent67/pinyougou-service-sellergoods" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/parent67/pinyougou-service-user" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent67/pinyougou-service-user" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/parent67/pinyougou-web-manager" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/parent67/pinyougou-web-portal" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/parent67/pinyougou-web-shop" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent67/pinyougou-web-user" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pinyougou-sms" charset="UTF-8" />
   </component>
 </project>

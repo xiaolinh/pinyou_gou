@@ -9,12 +9,14 @@
     <file type="web" url="file://$PROJECT_DIR$/parent67/pinyougou-web-manager" />
     <file type="web" url="file://$PROJECT_DIR$/parent67/pinyougou-web-portal" />
     <file type="web" url="file://$PROJECT_DIR$/parent67/pinyougou-web-shop" />
+    <file type="web" url="file://$PROJECT_DIR$/parent67/pinyougou-web-user" />
     <type id="Spring" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/parent67/pom.xml" />
+        <option value="$PROJECT_DIR$/pinyougou-sms/pom.xml" />
       </list>
     </option>
   </component>

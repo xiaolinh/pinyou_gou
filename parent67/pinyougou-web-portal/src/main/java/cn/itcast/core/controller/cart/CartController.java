@@ -7,6 +7,7 @@ import cn.itcast.core.pojo.order.OrderItem;
 import cn.itcast.core.service.cart.CartService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,11 @@ public class CartController {
     @RequestMapping("/addGoodsToCartList.do")
     @CrossOrigin(origins = "http://localhost:9003")
     public Result addGoodsToCartList(Long itemId , Integer num , HttpServletRequest request, HttpServletResponse response) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(name);
+        boolean flag = false;
+
+
         try {
             //将商品加入购物车
             //定义一个空的购物项,以商家店铺为单位
@@ -38,6 +44,7 @@ public class CartController {
                     if ("BUYER_CART".equals(cookie.getName())) {
                         //浏览器有购物车
                         cartList = JSON.parseArray(cookie.getValue(), Cart.class);
+                        flag = true;//标识符:cookie有购物项
                         //找到就跳出遍历,节省性能
                         break;
                     }
@@ -81,13 +88,26 @@ public class CartController {
 
             }
 
-            //将购物车保存到本地cookie中
-            Cookie cookie = new Cookie("BUYER_CART", JSON.toJSONString(cartList));
-            cookie.setMaxAge(60*60);
-            cookie.setPath("/"); // 设置cookie共享
-            response.addCookie(cookie);
+            //保存购物车到账号
+            if (!"anonymousUser".equals(name)) {//anonymousUser:表示未登录,已登录状态
+                //直接保存到redis
+                cartService.mergeCartList(cartList, name);
+                if (flag) {//cookie有购物项
+                    //清空cookie
+                    Cookie cookie = new Cookie("BUYER_CART", null);
+                    cookie.setMaxAge(0);
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
+                }
 
+            } else {//未登录状态
+                //将购物车保存到本地cookie中
+                Cookie cookie = new Cookie("BUYER_CART", JSON.toJSONString(cartList));
+                cookie.setMaxAge(60*60);
+                cookie.setPath("/"); // 设置cookie共享
+                response.addCookie(cookie);
 
+            }
             return new Result(true, "加入购物车成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +118,7 @@ public class CartController {
     }
 
     @RequestMapping("/findCartList.do")
-    public List<Cart> findCartList(HttpServletRequest request){
+    public List<Cart> findCartList(HttpServletRequest request,HttpServletResponse response){
         // 未登录，从cookie取
         List<Cart> cartList = null;
         // 2、判断本地是否有购物车
@@ -113,7 +133,19 @@ public class CartController {
                 }
             }
         }
-        // TODO 已登录，从redis取
+        //  已登录，从redis取
+        //获取用户信息
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!"anonymousUser".equals(name)) {//已登录
+            if (cartList != null) {
+                cartService.mergeCartList(cartList,name);
+                Cookie cookie = new Cookie("BUYER_CART", null);
+                cookie.setMaxAge(0);
+                cookie.setPath("/"); // 设置cookie共享
+                response.addCookie(cookie);
+            }
+          cartList = cartService.findCartListRedis(name);
+        }
 
         if(cartList != null){
             // 填充里面缺少的数据

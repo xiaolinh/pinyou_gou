@@ -1,6 +1,12 @@
 <component name="ArtifactManager">
   <artifact type="war" name="pinyougou-service-sellergoods:war">
     <output-path>$PROJECT_DIR$/parent67/pinyougou-service-sellergoods/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>pinyougou-service-sellergoods</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
     <root id="archive" name="pinyougou-service-sellergoods.war">
       <element id="artifact" artifact-name="pinyougou-service-sellergoods:war exploded" />
     </root>

@@ -111,7 +111,7 @@ app.controller('searchController',function($scope,$location,searchService){
 	$scope.keywordsIsBrand=function(){		
 		for(var i=0;i< $scope.resultMap.brandList.length;i++){			
 			if( $scope.searchMap.keywords.indexOf( $scope.resultMap.brandList[i].text )>=0  ){
-				return true;				
+				return true;
 			}			
 		}
 		return false;
@@ -126,7 +126,7 @@ app.controller('searchController',function($scope,$location,searchService){
 	//跳转到静态页面
 	$scope.openDetailPage = function(goodsId){
 
-		window.open("http://localhost:9001/"+goodsId+".html");
+		window.open("http://localhost:9003/"+goodsId+".html");
 	}
 	
 });

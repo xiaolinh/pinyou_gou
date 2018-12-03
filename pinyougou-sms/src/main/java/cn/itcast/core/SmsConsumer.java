@@ -15,11 +15,6 @@ import java.util.Map;
 
 @Component
 public class SmsConsumer {
-
-    @Autowired
-    private Environment environment;
-
-
     @JmsListener(destination ="itcast-sms")
     public void sendMessageToTencent(Map<String, Object> map) {
 

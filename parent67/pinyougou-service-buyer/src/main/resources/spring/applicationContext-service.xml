@@ -13,9 +13,9 @@
     <dubbo:registry address="zookeeper://192.168.200.128:2181"/>
     <dubbo:annotation package="cn.itcast.core.service" />
 
-    <!-- <bean id="idWorker" class="util.IdWorker">
+     <bean id="idWorker" class="cn.itcast.core.idworker.IdWorker">
          <constructor-arg index="0" value="1"></constructor-arg>
          <constructor-arg index="1" value="0"></constructor-arg>
-     </bean> -->
+     </bean>
 
 </beans>
